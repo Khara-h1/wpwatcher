@@ -46,13 +46,6 @@ jobs:
       - name: Install WPWatcher
         run: python setup.py install
       
-      - name: Install test dependencies
-        run: |        
-          pip install tox
-
-      - name: Run tests
-        run: tox -e test
-
       - name: Add WPSCAN API Token
         run: |
           sed -i 's/YOUR_API_TOKEN/${{ secrets.WPSCAN_TOKEN_1 }}/g' wpwatcher.conf
