@@ -51,4 +51,4 @@ jobs:
           sed -i 's/YOUR_API_TOKEN/${{ secrets.WPSCAN_TOKEN_1 }}/g' wpwatcher.conf
       
       - name: Run wpwatcher on Live WP instances
-        run: wpwatcher --url wpwatcher.conf
+        run: wpwatcher 
