@@ -1,5 +1,4 @@
 *.log
-*.conf
 *.pyc
 build
 dist
