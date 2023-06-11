@@ -1,0 +1,57 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: cron
+
+on:
+  push:
+    branches: '*'
+    tags: 
+      - '**'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  install:
+    runs-on: ${{ matrix.os }} 
+    name: ${{ matrix.os }} py${{ matrix.python-version }}
+    
+    strategy:
+      matrix:
+        python-version: [3.9]
+        os: [ubuntu-20.04]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+          
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      
+      - name: Display Python version
+        run: python --version
+        
+      - name: Display Ruby version
+        run: ruby --version
+
+      - name: Install WPScan
+        run: gem install wpscan
+      
+      - name: Install WPWatcher
+        run: python setup.py install
+      
+      - name: Install test dependencies
+        run: |        
+          pip install tox
+
+      - name: Run tests
+        run: tox -e test
+      
+      - name: Run wpwatcher on Live WP instances
+        run: wpwatcher --url zalando-lounge.cz

@@ -1,0 +1,11 @@
+*.log
+*.conf
+*.pyc
+build
+dist
+wpwatcher.egg-info
+__pycache__
+.coverage
+.vscode
+.tox
+coverage.xml
